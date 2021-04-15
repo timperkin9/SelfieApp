@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button photoButton;
     private ImageView photoView;
+    TouchListener touchListener;
+    boolean swipe = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        touchListener = new TouchListener(this);
+        photoView.setOnTouchListener(touchListener);
     }
 
     @Override
@@ -46,5 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
             //myCanvas.setBackground(new BitmapDrawable(getResources(), thumbnail));
         }
+    }
+
+    public void onUpSwipe() {
+        Log.i("up", "swipe");
+        photoView.setScaleY(1f);
+
+    }
+
+    public void onDownSwipe() {
+        Log.i("down", "swipe");
+
+        photoView.setScaleY(-1f);
+
     }
 }
